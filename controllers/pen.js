@@ -2,6 +2,35 @@ import mongoose from "mongoose";
 
 import Project from "../models/project.js";
 
+export const getPens = async (_, res) => {
+  try {
+    const pens = await Project.find().sort({ _id: -1 });
+    res.json(pens);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const getPenById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const pen = await Project.findById(id);
+    res.status(200).json(pen);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const getPensByUser = async (req, res) => {
+  const { creator } = req.params;
+  try {
+    const pens = await Project.find({ creator });
+    res.json(pens);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 export const createPen = async (req, res) => {
   const pen = req.body;
   const newPen = new Project({ ...pen, creator: req.userId });
