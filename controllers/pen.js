@@ -48,6 +48,7 @@ export const updatePen = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No pen with id: ${id}`);
   const updatedPen = {
+    _id: id,
     name,
     creator,
     creatorUsername,
@@ -55,7 +56,6 @@ export const updatePen = async (req, res) => {
     html,
     css,
     js,
-    _id: id,
   };
   try {
     await Project.findByIdAndUpdate(id, updatedPen, { new: true });
