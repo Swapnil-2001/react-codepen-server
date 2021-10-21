@@ -64,3 +64,19 @@ export const updatePen = async (req, res) => {
     res.status(409).json({ message: error.message });
   }
 };
+
+export const likePen = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No pen with id: ${id}`);
+  try {
+    const pen = await Project.findById(id);
+    const index = pen.likes.findIndex((pId) => pId === String(req.userId));
+    if (index === -1) pen.likes.push(req.userId);
+    else pen.likes = pen.likes.filter((pId) => pId !== String(req.userId));
+    const updatedPen = await Project.findByIdAndUpdate(id, pen, { new: true });
+    res.status(200).json(updatedPen);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+};

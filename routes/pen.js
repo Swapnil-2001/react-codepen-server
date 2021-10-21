@@ -7,6 +7,7 @@ import {
   getPens,
   createPen,
   updatePen,
+  likePen,
   getPensByUser,
   getPenById,
 } from "../controllers/pen.js";
@@ -18,5 +19,6 @@ router.get("/:id", getPenById);
 router.post("/create", auth, createPen);
 
 router.patch("/save/:id", auth, updatePen);
+router.patch("/like/:id", auth, likePen);
 
 export default router;
