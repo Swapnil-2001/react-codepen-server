@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const projectSchema = mongoose.Schema({
   id: { type: String },
   creator: { type: String, required: true },
+  creatorUsername: { type: String, required: true },
   name: { type: String, required: true },
   likes: { type: [String], default: [] },
   html: { type: String },

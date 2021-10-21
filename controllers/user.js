@@ -9,7 +9,7 @@ export const signup = async (req, res) => {
   const { email, password, username } = req.body;
 
   try {
-    const oldUser = await User.findOne({ email });
+    const oldUser = await User.findOne({ $or: [{ email }, { username }] });
 
     if (oldUser)
       return res.status(400).json({ message: "User already exists" });
@@ -20,6 +20,8 @@ export const signup = async (req, res) => {
       email,
       password: hashedPassword,
       username,
+      fontSize: 14,
+      theme: "material",
     });
 
     const token = jwt.sign({ email: result.email, id: result._id }, secret, {
@@ -55,5 +57,15 @@ export const signin = async (req, res) => {
     res.status(200).json({ result: oldUser, token });
   } catch (err) {
     res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const getUser = async (req, res) => {
+  const { username } = req.params;
+  try {
+    const user = await User.findOne({ username });
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(404).json({ message: "Cannot get user!" });
   }
 };

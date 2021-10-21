@@ -44,10 +44,19 @@ export const createPen = async (req, res) => {
 
 export const updatePen = async (req, res) => {
   const { id } = req.params;
-  const { name, creator, likes, html, css, js } = req.body;
+  const { name, creator, creatorUsername, likes, html, css, js } = req.body;
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No pen with id: ${id}`);
-  const updatedPen = { name, creator, likes, html, css, js, _id: id };
+  const updatedPen = {
+    name,
+    creator,
+    creatorUsername,
+    likes,
+    html,
+    css,
+    js,
+    _id: id,
+  };
   try {
     await Project.findByIdAndUpdate(id, updatedPen, { new: true });
     res.json(updatedPen);
