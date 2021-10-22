@@ -22,6 +22,7 @@ export const signup = async (req, res) => {
       username,
       fontSize: 14,
       theme: "material",
+      lineNumbers: true,
     });
 
     const token = jwt.sign({ email: result.email, id: result._id }, secret, {

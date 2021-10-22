@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema({
   password: { type: String, required: true },
   fontSize: { type: Number, required: true },
   theme: { type: String, required: true },
+  lineNumbers: { type: Boolean, required: true },
 });
 
 export default mongoose.model("User", userSchema);
