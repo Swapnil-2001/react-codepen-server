@@ -17,7 +17,7 @@ const auth = async (req, res, next) => {
     }
     next();
   } catch (error) {
-    res.json({ message: "Expired" });
+    res.json({ message: "Not authenticated." });
   }
 };
 

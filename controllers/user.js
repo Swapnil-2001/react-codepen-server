@@ -20,14 +20,9 @@ export const signup = async (req, res) => {
       email,
       password: hashedPassword,
       username,
-      fontSize: 14,
-      theme: "material",
-      lineNumbers: true,
     });
 
-    const token = jwt.sign({ email: result.email, id: result._id }, secret, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign({ email: result.email, id: result._id }, secret, {});
 
     res.status(201).json({ result, token });
   } catch (error) {
@@ -51,9 +46,11 @@ export const signin = async (req, res) => {
     if (!isPasswordCorrect)
       return res.status(400).json({ message: "Invalid credentials" });
 
-    const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { email: oldUser.email, id: oldUser._id },
+      secret,
+      {}
+    );
 
     res.status(200).json({ result: oldUser, token });
   } catch (err) {
