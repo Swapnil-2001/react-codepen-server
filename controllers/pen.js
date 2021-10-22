@@ -46,7 +46,7 @@ export const updatePen = async (req, res) => {
   const { id } = req.params;
   const { name, creator, creatorUsername, likes, html, css, js } = req.body;
   if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No pen with id: ${id}`);
+    return res.status(404).json({ message: `No pen with id: ${id}` });
   const updatedPen = {
     _id: id,
     name,
@@ -68,7 +68,7 @@ export const updatePen = async (req, res) => {
 export const likePen = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No pen with id: ${id}`);
+    return res.status(404).json({ message: `No pen with id: ${id}` });
   try {
     const pen = await Project.findById(id);
     const index = pen.likes.findIndex((pId) => pId === String(req.userId));
