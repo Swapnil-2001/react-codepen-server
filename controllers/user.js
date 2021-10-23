@@ -20,6 +20,7 @@ export const signup = async (req, res) => {
       email,
       password: hashedPassword,
       username,
+      starred: [],
     });
 
     const token = jwt.sign({ email: result.email, id: result._id }, secret, {});
