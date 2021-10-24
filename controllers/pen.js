@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 import Project from "../models/project.js";
+import User from "../models/user.js";
 
 export const getPens = async (_, res) => {
   try {
@@ -19,6 +20,16 @@ export const getPenById = async (req, res) => {
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
+};
+
+export const getStarredPens = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).json({ message: `No user with id: ${id}` });
+  try {
+    const pens = await Project.find({ starredBy: id });
+    res.json(pens);
+  } catch (error) {}
 };
 
 export const getPensByUser = async (req, res) => {
@@ -60,6 +71,27 @@ export const updatePen = async (req, res) => {
   try {
     await Project.findByIdAndUpdate(id, updatedPen, { new: true });
     res.json(updatedPen);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+};
+
+export const starPen = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).json({ message: `No pen with id: ${id}` });
+  try {
+    const post = await Project.findById(id);
+    const index = post.starredBy.findIndex((uId) => uId === String(req.userId));
+    if (index === -1) post.starredBy.push(req.userId);
+    else
+      post.starredBy = post.starredBy.filter(
+        (uId) => uId !== String(req.userId)
+      );
+    const updatedPost = await Project.findByIdAndUpdate(id, post, {
+      new: true,
+    });
+    res.status(200).json(updatedPost);
   } catch (error) {
     res.status(409).json({ message: error.message });
   }

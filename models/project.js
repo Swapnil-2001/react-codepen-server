@@ -6,6 +6,7 @@ const projectSchema = mongoose.Schema({
   creatorUsername: { type: String, required: true },
   name: { type: String, required: true },
   likes: { type: [String], default: [] },
+  starredBy: { type: [String], default: [] },
   html: { type: String },
   css: { type: String },
   js: { type: String },

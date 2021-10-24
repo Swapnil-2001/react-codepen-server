@@ -59,12 +59,12 @@ export const signin = async (req, res) => {
   }
 };
 
-export const getUser = async (req, res) => {
-  const { username } = req.params;
-  try {
-    const user = await User.findOne({ username });
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(404).json({ message: "Cannot get user!" });
-  }
-};
+// export const getUser = async (req, res) => {
+//   const { username } = req.params;
+//   try {
+//     const user = await User.findOne({ username });
+//     res.status(200).json(user);
+//   } catch (error) {
+//     res.status(404).json({ message: "Cannot get user!" });
+//   }
+// };
