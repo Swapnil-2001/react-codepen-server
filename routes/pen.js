@@ -7,6 +7,7 @@ import {
   getPens,
   getStarredPens,
   createPen,
+  deletePen,
   updatePen,
   likePen,
   starPen,
@@ -24,5 +25,7 @@ router.post("/create", auth, createPen);
 router.patch("/save/:id", auth, updatePen);
 router.patch("/like/:id", auth, likePen);
 router.patch("/star/:id", auth, starPen);
+
+router.delete("/:id", auth, deletePen);
 
 export default router;

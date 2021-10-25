@@ -112,3 +112,15 @@ export const likePen = async (req, res) => {
     res.status(409).json({ message: error.message });
   }
 };
+
+export const deletePen = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).json({ message: `No pen with id: ${id}` });
+  try {
+    await Project.findByIdAndRemove(id);
+    res.json({ message: "Pen deleted successfully." });
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+};
