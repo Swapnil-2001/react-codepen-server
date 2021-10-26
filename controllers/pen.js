@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 import Project from "../models/project.js";
-import User from "../models/user.js";
 
 export const getPens = async (_, res) => {
   try {
